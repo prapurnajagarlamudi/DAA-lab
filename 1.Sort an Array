@@ -1,0 +1,78 @@
+Given an array of integers nums, sort the array in ascending order and return it.
+You must solve the problem without using any built-in functions in O(nlog(n)) time complexity and with the smallest space complexity possible.
+
+Example 1:
+Input: nums = [5,2,3,1]
+Output: [1,2,3,5]
+Explanation: After sorting the array, the positions of some numbers are not changed (for example, 2 and 3), while the positions of other numbers are changed (for example, 1 and 5).
+
+Example 2:
+Input: nums = [5,1,1,2,0,0]
+Output: [0,0,1,1,2,5]
+Explanation: Note that the values of nums are not necessairly unique.
+
+Constraints:
+
+1 <= nums.length <= 5 * 104
+-5 * 104 <= nums[i] <= 5 * 104
+
+#include<stdio.h>
+void swap(int *x,int *y)
+{
+    int temp=*x;
+    *x=*y;
+    *y=temp;
+}
+
+int partition(int arr[100],int lb,int ub)
+{
+    int start=lb,end=ub,pivot=arr[lb];
+    while(start<end)
+    {
+        while(arr[start]<=pivot)
+        {
+            start++;
+        }
+        while(arr[end]>pivot)
+        {
+            end--;
+        }
+        if(start<end)
+        {
+            swap(&arr[start],&arr[end]);
+        }
+    }
+    swap(&arr[lb],&arr[end]);
+    return end;
+}
+
+void quicksort(int arr[100],int lb,int ub)
+{
+    int p;
+    if(lb<ub)
+    {
+        p=partition(arr,lb,ub);
+        quicksort(arr,lb,p-1);
+        quicksort(arr,p+1,ub);
+    }
+}
+
+void main()
+{
+    int arr[100],n,i;
+    scanf("%d",&n);
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&arr[i]);
+    }
+    quicksort(arr,0,n-1);
+    for(i=0;i<n;i++)
+    {
+        printf("%d ",arr[i]);
+    }
+}
+
+
+4
+5 2 3 1
+1 2 3 5
